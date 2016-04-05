@@ -14,11 +14,6 @@
   Plus, Shiro also supports acceess to LDAP and AD out of box like Spring Security. Except easier to use IMHO.
   
   For quick tutorial of using Shiro with ZK: http://books.zkoss.org/wiki/Small_Talks/2012/March/Securing_ZK_Applications_With_Apache_Shiro
-  
-* Did I write most of the code myself?
-
-  Well, most of the code is indeed written by me but I couldn't have done it without the help of resources from web
-  (thanks Google, StackOverflow) and the ZK, maven knowledge I learned in my current company.
 
 * Is ZK better than GWT, JSF, Seam?
 
