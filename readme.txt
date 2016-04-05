@@ -8,11 +8,7 @@
   
 * Why Shiro demo? 
 
-  It is way way ... way easier to use, get your head around and get it working THAN Spring Security!! OK, I didn't give
-  Spring Security 3 a fair go since I have been bitten by the horror of Spring Security 2.x(a.k.a Acegi).
-  
-  Plus, Shiro also supports acceess to LDAP and AD out of box like Spring Security. Except easier to use IMHO.
-  
+  It is way way ... way easier to use, get your head around and get it working THAN Spring Security!!
   For quick tutorial of using Shiro with ZK: http://books.zkoss.org/wiki/Small_Talks/2012/March/Securing_ZK_Applications_With_Apache_Shiro
 
 * Is ZK better than GWT, JSF, Seam?
