@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<enunciate
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://enunciate.codehaus.org/schemas/enunciate-1.27.xsd">
+
+	<modules>
+		<c disabled="true"/>
+		<obj-c disabled="true"/>
+		<jaxws disabled="true"/>
+		<jaxws-client disabled="true"/>
+		<jaxws-ri disabled="true"/>
+		<cxf disabled="true" />
+		<xfire disabled="true"/>
+		<jersey disabled="true"/>
+		
+		<csharp disabled="false"/>
+
+		<!-- Docs -->
+		<docs splashPackage="org.zkfuse.webservice.service"
+			title=" API" copyright="company-name.com">
+			<download name="License" file="LICENSE.txt" description="The license file governing the use of this API." />
+		</docs>
+	</modules>
+	
+</enunciate>

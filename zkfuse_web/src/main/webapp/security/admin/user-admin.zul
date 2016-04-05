@@ -1,0 +1,214 @@
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<window	apply="org.zkoss.bind.BindComposer" xmlns="http://www.zkoss.org/2005/zul"
+           viewModel="@id('vm') @init('org.zkfuse.web.security.vm.SecurityUserViewModel')"
+           validationMessages="@id('vmsgs')" border="normal" hflex="1" vflex="1" contentStyle="overflow:auto">
+
+    <caption src="/imgs/profile.png" sclass="fn-caption" label="User Admin"/>
+
+    <borderlayout>
+
+        <center autoscroll="true" border="none" >
+
+            <vlayout style="margin-right: 10px">
+
+                <panel framable="true" title="User List" >
+
+                    <panelchildren>
+
+                        <vlayout hflex="1" >
+
+                            <listbox model="@load(vm.entityList)" selectedItem="@bind(vm.selected)" hflex="true" height="250px"
+                                    style="border: none" >
+                                <listhead>
+                                    <listheader label="Id" width="80px" sort="auto(userId)" />
+                                    <listheader label="Login Name" width="180px" sort="auto(userLoginName)" />
+                                    <listheader label="Password" align="center" width="120px" sort="auto(userPassword)" />
+                                    <listheader label="Salt" align="center" width="120px" sort="auto(userSalt)" />
+                                    <listheader label="" align="center" width="100%" />
+                                </listhead>
+                                <template name="model" var="item">
+                                    <listitem >
+                                        <listcell label="@load(item.userId)" onClick="@command('reloadAvailableAndAssignedRoleLists')" />
+                                        <listcell label="@load(item.userLoginName)" onClick="@command('reloadAvailableAndAssignedRoleLists')" />
+                                        <listcell label="@load(item.userPassword)" onClick="@command('reloadAvailableAndAssignedRoleLists')" />
+                                        <listcell label="@load(item.userSalt)" onClick="@command('reloadAvailableAndAssignedRoleLists')" />
+                                        <listcell label="" onClick="@command('reloadAvailableAndAssignedRoleLists')" />
+                                    </listitem>
+                                </template>
+                            </listbox>
+
+                        </vlayout>
+
+                    </panelchildren>
+
+                    <toolbar mold="panel" align="start">
+                        <hlayout>
+                            <button label="New User" onClick="@command('newEntity')" autodisable="self"/>
+                        </hlayout>
+                    </toolbar>
+
+                </panel>
+
+                <separator height="10px" />
+
+                <div visible="@bind(not empty vm.selected.userId)">
+
+                    <vlayout>
+                        <grid hflex="1">
+                            <columns>
+                                <column hflex="1"/>
+                                <column hflex="min"/>
+                                <column hflex="1"/>
+                            </columns>
+                            <rows>
+                                <row>
+                                    <cell>
+                                        <panel title="Available Roles:">
+                                            <panelchildren>
+                                                <listbox id="left" model="@load(vm.availableSecurityRoleList)" height="200px"
+                                                         oddRowSclass="non-odd" checkmark="true">
+                                                    <template name="model">
+                                                        <listitem>
+                                                            <listcell label="@load(each.roleName)" />
+                                                        </listitem>
+                                                    </template>
+                                                </listbox>
+                                            </panelchildren>
+                                        </panel>
+                                    </cell>
+                                    <cell >
+                                        <panel>
+                                            <panelchildren class="actionColumn">
+                                                <image sclass="pointer" tooltiptext="Add Role(s)"
+                                                       src="/imgs/ButtonArrowRight32.png"
+                                                       onClick="@command('addSecurityRoles')">
+                                                </image>
+                                                <separator height="15px"/>
+                                                <image sclass="pointer" tooltiptext="Remove Role(s)"
+                                                       src="/imgs/ButtonArrowLeft32.png"
+                                                       onClick="@command('removeSecurityRoles')">
+                                                </image>
+                                            </panelchildren>
+                                        </panel>
+                                    </cell>
+                                    <cell>
+                                        <panel title="Role(s) assigned to selected User:" >
+                                            <panelchildren>
+                                                <listbox id="right" model="@load(vm.ownedSecurityRoleList)" height="200px"
+                                                         oddRowSclass="non-odd" checkmark="true">
+                                                    <template name="model">
+                                                        <listitem>
+                                                            <listcell label="@load(each.roleName)" />
+                                                        </listitem>
+                                                    </template>
+                                                </listbox>
+                                            </panelchildren>
+                                        </panel>
+                                    </cell>
+                                </row>
+                            </rows>
+                        </grid>
+                    </vlayout>
+
+                    <toolbar mold="panel" align="center">
+                        <hlayout>
+                            <button label="Save Assigned Roles" onClick="@command('saveSecurityRolesToUser')" disabled="@bind(empty vm.selected)" autodisable="self"/>
+                        </hlayout>
+                    </toolbar>
+
+                </div>
+
+            </vlayout>
+
+        </center>
+
+        <east visible="@bind(not empty vm.selected)" width="350px" border="none" collapsible="false" splittable="true" minsize="300" autoscroll="true">
+            <panel title="User Details" style="margin-right: 10px">
+                <panelchildren style="border: none">
+
+                    <vlayout form="@id('fx') @load(vm.selected) @save(vm.selected, before='saveEntity')" visible="@bind(not empty vm.selected)" >
+
+                        <grid hflex="1">
+                            <columns>
+                                <column align="right" hflex="min"/>
+                                <column/>
+                            </columns>
+                            <rows>
+                                <row>
+                                    <cell sclass="row-title">Id:</cell>
+                                    <cell>
+                                        <hlayout>
+                                            <label value="@bind(fx.userId)" />
+                                            <image src="@load(fxStatus.dirty?'exclamation.png':'')" />
+                                        </hlayout>
+                                    </cell>
+                                </row>
+
+                                <row>
+                                    <cell sclass="row-title">Login Name:</cell>
+                                    <cell>
+                                            <textbox id="loginNameBox" value="@bind(fx.userLoginName) @validator(vm.jsr303Validator)" mold="rounded" hflex="1" />
+                                    </cell>
+                                </row>
+                                <row>
+                                    <cell/>
+                                    <cell>
+                                          <label value="@load(vmsgs[loginNameBox])" sclass="warn" />
+                                    </cell>
+                                </row>
+
+                                <row>
+                                    <cell sclass="row-title">Password:</cell>
+                                    <cell>
+                                        <textbox id="passwordBox" value="@bind(fx.userPassword) @validator(vm.jsr303Validator)" mold="rounded" hflex="1" />
+                                    </cell>
+                                </row>
+                                <row>
+                                    <cell/>
+                                    <cell>
+                                        <label value="@load(vmsgs[passwordBox])" sclass="warn" />
+                                    </cell>
+                                </row>
+
+                                <row>
+                                    <cell sclass="row-title">Salt:</cell>
+                                    <cell>
+                                        <textbox id="saltBox" value="@bind(fx.userSalt) @validator(vm.jsr303Validator)" mold="rounded" hflex="1" />
+                                    </cell>
+                                </row>
+                                <row>
+                                    <cell/>
+                                    <cell>
+                                        <label value="@load(vmsgs[saltBox])" sclass="warn" />
+                                    </cell>
+                                </row>
+                            </rows>
+                        </grid>
+
+                        <toolbar mold="panel" align="center">
+                            <hlayout>
+                                <button id="saveButton" label="Save" onClick="@command('saveEntity')" disabled="@bind(empty vm.selected)"
+                                        autodisable="saveButton,deleteButton" />
+                                <button id="deleteButton" label="Delete" onClick="@command(empty vm.selected.userId?'deleteEntity':'confirmDelete')"
+                                        disabled="@load(empty vm.selected)" autodisable="saveButton,deleteButton"/>
+                            </hlayout>
+                        </toolbar>
+
+                    </vlayout>
+                </panelchildren>
+            </panel>
+
+        </east>
+    </borderlayout>
+    <include src="/common/messageDialogs.zul" />
+
+    <style>
+        .pointer {
+            cursor: pointer;
+        }
+        .actionColumn {
+            margin: 30px  30px;
+        }
+    </style>
+
+</window>

@@ -1,0 +1,42 @@
+
+
+	How to run the demo app 'zkfuse'
+
+- Tools used: MySQL 5.5.20 for database. Maven for build.
+
+1. Create and populate a database named zkfuse first by running the zkfuse.sql
+
+2. Unzip the project zkfuse.rar and import the maven project into your favourite IDE. 
+   Find and open up the file default.properties, look for the lines
+
+    jdbc.connection.url=jdbc:mysql://localhost:3306/zkfuse
+	jdbc.connection.username=root
+	jdbc.connection.password=password
+	
+   These are the username and password for connecting to your database. Change as required for your database.
+
+   If database is not at localhost, change as required, e.g. change
+   jdbc.connection.url=jdbc:mysql://localhost:3306/zkfuse to
+   jdbc.connection.url=jdbc:mysql://<IP Address of MySQL>:3306/zkfuse
+
+3. To configure Shiro for authentication login demo, open up shiro.ini at /zkfuse/zkfuse_web/src/main/webapp/WEB-INF/shiro.ini.
+   Look for the lines
+
+        ds.jdbcUrl = jdbc:mysql://localhost:3306/zkfuse
+        ds.user = root
+        ds.password = password
+
+   Those are the username and password of your database(like 2. above). Change them to match your database.
+
+   If database is not at localhost, change as required, e.g. change
+      ds.jdbcUrl = jdbc:mysql://localhost:3306/zkfuse to
+      ds.jdbcUrl = jdbc:mysql://<IP Address of MySQL>:3306/zkfuse
+
+4. To build from command line, cd into the project folder 'zkfuse', then simply run the maven command: mvn clean install
+
+5. To run from command line, cd into the project folder 'zkfuse', then cd again into zkfuse_web folder, run the maven command: jetty run
+
+6. Open up a browser and points to localhost:8080/zkfuse_web
+
+7. Default log file location is C:/logs/zkfuse/zkfuse.log. Tweak logging levels in log4j.xml at
+   \zkfuse\zkfuse_web\src\main\resources\log4j.xml as required.

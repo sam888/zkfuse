@@ -1,0 +1,107 @@
+<?page title="Hello World!" contentType="text/html;charset=UTF-8"?>
+<?xel-method prefix="c" name="l" class="org.zkfuse.web.util.i18n.LabelsUtil" signature="java.lang.String getLabel(java.lang.String)"?>
+
+<zk xmlns:h="http://www.w3.org/1999/xhtml" xmlns:zk="http://www.zkoss.org/2005/zk">
+
+	<style>
+	    <!-- credits: http://robertnyman.com/2010/02/24/css-display-inline-block-why-it-rocks-and-why-it-sucks/ -->
+	    ul.display-inline-block, ul.display-inline-block li {
+	        vertical-align: top;
+	        display: inline-block;
+	        margin: 0 10px;
+	        padding: 0;
+	    }
+	
+	    ul .z-separator-hor, ul .z-separator-hor-bar {
+	        height: 0px;
+	    }
+
+	    .bold-font {
+            font-weight: bold;
+        }
+	</style>
+
+    <window border="normal"  width="100%"  title="Welcome to Internationalization(I18N) Demo!" contentStyle="overflow:auto" vflex="1">
+
+         <separator />
+         <separator />
+
+         <h:ul class="display-inline-block" >
+             <h:li>
+                 <image src="/imgs/Aqua-Ball-Green-icon.png"  height="12px" />
+             </h:li>
+             <h:li>
+                 <label class="bold-font">How it works:</label><separator />
+                 By using the <label class="bold-font" value="Resource Bundle Form" /> of
+                 <label class="bold-font" value="I18N Administration" /> panel from left, one can dynamically <separator />
+                 change any existing label or add labels for a new language at runtime without server restart!<separator style="margin-top: 7px"/>
+
+                 The <label class="bold-font" value="Hello World" /> and <label class="bold-font" value="User Details" /> menu items on
+                 left are internationalized and will display <separator />
+                 different labels depending on the locale selected from Locale combobox above <separator style="margin-top: 7px" />
+
+                 If a new locale is selected, to see internationalized labels in the current page, you <separator />
+                 need to click link of other page then click back to the current page again.<separator style="margin-top: 7px" />
+
+                 Note only locales listed in the Locale combobox above are supported. And no cookie is used to <separator />
+                 stored the selected locale, after all this is just a DEMO. ;)
+             </h:li>
+         </h:ul>
+         <separator />
+         <separator />
+         <h:ul class="display-inline-block" >
+             <h:li>
+                 <image src="/imgs/Aqua-Ball-Green-icon.png"  height="12px" />
+             </h:li>
+             <h:li>
+                 <label class="bold-font">Resource Bundle concept:</label><separator />
+                 Each page will be identified by a unique module name and has a set of labels. Each label will be persisted by <separator/>
+                 one KeyValue record to DB. All KeyValue records for a given page will have a foreign key pointing to the same<separator/>
+                 ResourceBundle record.<separator style="margin-top: 7px"/>
+
+                 A ResourceBundle record will have 2 foreign keys, one to a Locale record, one to a Module record and also has <separator />
+                 one to many relationships to KeyValue records, each of which represents a label in the page<separator style="margin-top: 7px"/>
+
+                 A new resource bundle is required for a unique combination of locale and module.
+             </h:li>
+         </h:ul>
+         <separator /><separator />
+
+         <h:ul class="display-inline-block" >
+             <h:li>
+                 <image src="/imgs/Aqua-Ball-Green-icon.png"  height="12px" />
+             </h:li>
+             <h:li>
+                 <label class="bold-font">To create a new Resource Bundle:</label><separator />
+
+                 A resource bundle is like a properties file for a given JSP file. To create a new resource bundle for a given locale <separator />
+                 available from the Locale combobox above, first creates a Locale record using the I18N Admin console on the left. <separator style="margin-top: 7px"/>
+
+                 The language and country codes for the new locale will have to match the selected locale from combobox, e.g. <separator />
+                 When 'Korea' locale is selected, we can see the language code is 'ko' and country code is 'KR'. <separator style="margin-top: 7px"/>
+
+                 Then use 'Resource Bundle Form' of 'I18N Admin Console' to create a new Resource Bundle record with the newly <separator />
+                 created locale and existing module. After that, create as many KeyValue records as required for the targeted page.<separator style="margin-top: 7px"/>
+
+                 When done, don't forget to click the Reload button to clear the cache for any label change to take effect. <separator />
+                 This Reload button will only be enabled when a Resource Bundle is selected from the list in Resource Bundle form.
+             </h:li>
+         </h:ul>
+
+         <separator /><separator />
+         <h:ul class="display-inline-block" >
+             <h:li>
+                 <image src="/imgs/Aqua-Ball-Green-icon.png"  height="12px" />
+             </h:li>
+             <h:li>
+                 <label class="bold-font">What if no label is found from DB?</label><separator />
+                 If no label matching the current locale in session can be found from database, '{ [label key] }' will <separator />
+                 be displayed where [label key] will be replaced by actual key. In this case, if the key 'zk' can't be <separator />
+                 found, '{zk}' will be displayed instead
+             </h:li>
+         </h:ul>
+
+        <separator /><separator />
+   </window>
+
+</zk>

@@ -1,0 +1,34 @@
+
+<bandbox id="moduleBandbox" mold="rounded" autodrop="true" apply="org.zkoss.bind.BindComposer"
+     viewModel="@id('moduleVM')  @init('org.zkfuse.web.vm.i18n.ModuleVM')" readonly="false" >
+
+    <custom-attributes command="${arg.command}"/>
+    
+    <bandpopup>
+
+        <listbox id="moduleListbox"
+            model="@load(moduleVM.entityList)" mold="paging" autopaging="true" pageSize="8"
+            width="400px" height="200px" 
+            onSelect="@global-command('onSelectModuleListboxListener', moduleListbox=self, namebox=namebox)">
+
+            <listhead>
+                <listheader label="Id" width="80px" sort="auto(moduleId)" />
+                <listheader label="Name" align="center" width="120px" sort="auto(name)" />
+                <listheader label="Description" align="center" width="200px" />
+                <listheader label="" align="center" width="100%" />
+            </listhead>
+
+            <template name="model" var="item">
+                <listitem>
+                    <listcell label="@load(item.moduleId)" />
+                    <listcell label="@load(item.name)" />
+                    <listcell label="@load(item.description)" />
+                    <listcell label="" />
+                </listitem>
+            </template>
+
+        </listbox>
+
+    </bandpopup>
+
+</bandbox>

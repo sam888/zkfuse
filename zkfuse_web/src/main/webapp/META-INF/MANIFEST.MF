@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Specification-Title: zkfuse_web
+Specification-Version: 0.0.1-SNAPSHOT
+Implementation-Title: org.zkfuse_web
+Implementation-Version: 0.0.1-SNAPSHOT

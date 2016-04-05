@@ -1,0 +1,121 @@
+<?page title="ZK I18N Demo using DB" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="http://www.w3.org/1999/xhtml" >
+     <style>
+        <!-- .z-label {
+            font-weight: bold;
+            color: #636363;
+        } -->
+
+        .z-window-modal-header, .z-window-popup-header, .z-window-highlighted-header, .z-window-overlapped-header, .z-window-embedded-header {
+            font-weight: bold;
+        }
+
+        .z-button .z-button-cm {
+            <!-- font-weight: bold; -->
+            <!-- color: #636363; -->
+        }
+
+        <!-- credits: http://robertnyman.com/2010/02/24/css-display-inline-block-why-it-rocks-and-why-it-sucks/ -->
+        ul.display-inline-block, ul.display-inline-block li {
+            vertical-align: top;
+            display: inline-block;
+            margin: 0 10px;
+            padding: 0;
+        }
+
+        ul .z-separator-hor, ul .z-separator-hor-bar {
+            height: 0px;
+        }
+
+        .bold-font {
+            font-weight: bold;
+        }
+
+     </style>
+ 
+    <window id="main" width="100%" height="100%" apply="org.zkfuse.web.controller.BorderLayoutComposer">
+        <borderlayout>
+            <north size="70px">
+                <div>
+                    <hlayout spacing="5px" style="margin-top: 10px;" >
+                    
+                            <html><![CDATA[
+                                    <h2 style="color:#0C7A9A;margin: 10px">Internationalization with Database</h2>
+                                   ]]>
+                            </html>
+                            <separator width="20px" />
+                    
+                            Locale: <listbox id="localeListbox" mold="select" />
+                            <separator width="30px" />
+                            Current Locale [language code]_[country code]: <label id="localeLabel" />
+                    </hlayout>
+                </div>
+            </north>
+            
+            <west size="200px" splittable="true" flex="true" collapsible="true" title="Functions"> 
+                 <div>
+                    <listbox id="menuListbox" style="border:none"/> 
+                    <space />
+                    <panel title="I18N Administration" style="margin: 5px" border="rounded" collapsible="true" >
+                       
+                       <panelchildren style="border: none">
+                           <tabbox mold="accordion"  >
+                                   <tabs id="tabsAdd">
+                                    <tab label="Locale" />
+                                    <tab label="Module" />
+                                    <tab label="Resource Bundle" />
+                                   </tabs>
+                                   <tabpanels >
+                                    <tabpanel>
+                                     <vbox>
+                                        <toolbarbutton label="Locale Form" >
+                                            <custom-attributes url="i18n/localeForm.zul"/>
+                                        </toolbarbutton>
+                                     </vbox>
+                                    </tabpanel>
+                                    <tabpanel>
+                                     <vbox>
+                                          <toolbarbutton label="Module Form" >
+                                              <custom-attributes url="i18n/moduleForm.zul"/>
+                                          </toolbarbutton>
+                                     </vbox>
+                                    </tabpanel>
+                                    <tabpanel>
+                                     <vbox>
+                                          <toolbarbutton label="Resource Bundle Form" >
+                                              <custom-attributes url="i18n/resourceBundleForm.zul"/>
+                                          </toolbarbutton>
+                                     </vbox>
+                                    </tabpanel>
+                                    <tabpanel>
+                                     <vbox>
+                                          <toolbarbutton label="Labels" >
+                                              <custom-attributes url="i18n/keyValueForm.zul"/>
+                                          </toolbarbutton>
+                                     </vbox>
+                                    </tabpanel>
+                                   </tabpanels>
+                             </tabbox>
+                       </panelchildren>
+          
+                    </panel>
+                 </div>
+            </west>
+            
+            <center flex="true" >
+                 <div id="contentDiv" >
+                    <include src="/i18n/welcome_i18n.zul" />
+                 </div>
+            </center>
+            
+            <south size="50px">
+                <hbox pack="center" width="100%">
+                    <html><![CDATA[
+                        <!-- <span style="color:#0C7A9A">Create by ZK Sample Wizard</span> -->
+                    ]]></html>
+                </hbox>
+            </south>
+            
+        </borderlayout>
+    </window>
+</zk>

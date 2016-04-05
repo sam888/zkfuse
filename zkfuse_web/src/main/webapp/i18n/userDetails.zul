@@ -1,0 +1,83 @@
+<?page title="User Details" contentType="text/html;charset=UTF-8"?>
+<?xel-method prefix="c" name="l" class="org.zkfuse.web.util.i18n.LabelsUtil" signature="java.lang.String getLabel(java.lang.String)"?>
+
+<window  border="normal" height="100%" id="win" apply="org.zkfuse.web.composer.BaseBindComposer" 
+    viewModel="@id('vm') @init('org.zkfuse.web.vm.i18n.UserDetailsVM')" xmlns="http://www.zkoss.org/2005/zul">
+    
+    <separator />
+    This page is internationalized using the module 'UserDetails'. Currently, only english is supported in this page. <separator />
+    This means the labels for this page are internationalized in  a ResourceBundle named 'TestModule_en'.<separator style="margin-top: 7px"/>
+    That is, all resource bundle are named as {module name}_{language code}_{country code}. Feel free <separator />
+    to add labels of a new language listed in the locale combobox above by creating a new resource bundle using<separator />
+    'Resource Bundle Form' from left! <separator style="margin-top: 7px" />
+
+    To see internationalized labels for a locale, select a locale from the Locale combobox above. Click to other page then <separator />
+    come back here. Note only locales listed in the combobox are supported.<separator style="margin-top: 7px" />
+
+	<grid fixedLayout="true">
+		<columns>
+			<column label="${c:l('type')}" width="150px" />
+			<column label="${c:l('content')}" />
+		</columns>
+		<rows>
+			<row>
+				<label value="${c:l('username')}" />
+				<textbox value="Jerry" width="150px" mold="rounded"/>
+			</row>
+			<row>
+				<label value="${c:l('password')}" />
+				<textbox type="password" value="123456789" width="150px" mold="rounded"/>
+			</row>
+			<row>
+				<!-- Re-type Password -->
+				<label value="${c:l('retype.password')}" />
+				<textbox type="password" value="123456789" width="150px" mold="rounded"/>
+			</row>
+			<row>
+				<!-- Age: -->
+				<label value="${c:l('age')}:" />
+				<intbox value="19" constraint="no negative,no zero" width="150px" mold="rounded"/>
+			</row>
+			<row>
+				<!-- Phone: -->
+				<label value="${c:l('phone')}:" />
+				<intbox constraint="no negative,no zero" width="150px" value="12345678" mold="rounded"/>
+			</row>
+			<row>
+				<!-- Weight: -->
+				<label value="${c:l('weight')}:" />
+				<decimalbox format="###.##" value="154.32" width="150px" mold="rounded"/>
+			</row>
+			<row>
+				<!-- Birthday: -->
+				<label value="${c:l('birthday')}:" />
+				<hbox>
+					<datebox id="db" width="150px" mold="rounded"/>
+					<listbox onSelect="db.setFormat((String)self.getSelectedItem().getValue())" mold="select" rows="1" >
+						<listitem label="Default" value="" />
+						<listitem label="yyyy/MM/dd hh:mm a" value="yyyy/MM/dd hh:mm a" />
+						<listitem label="yyyy/MM/dd" value="yyyy/MM/dd" />
+						<listitem label="MM-dd-yy" value="MM-dd-yy" />
+					</listbox>
+				</hbox>
+			</row>
+			<row>
+				<!-- Address -->
+				<label value="${c:l('address')}:" />
+				<vbox>
+					<textbox width="250px" value="123 W. 45 Street, New York, NY 10001" mold="rounded"/>
+					<hbox>
+						<!-- <label value="Zip code :" /> -->
+						<label value="${c:l('zip.code')}:" />
+						<intbox constraint="no negative,no zero" width="150px" mold="rounded"/>
+					</hbox>
+				</vbox>
+			</row>
+			<row>
+				<!-- E-mail: -->
+			    <label value="${c:l('email')}:" />
+				<textbox width="150px" value="zk@zkoss.org" constraint="/.+@.+\.[a-z]+/: Please enter an e-mail address" mold="rounded"/>
+			</row>
+		</rows>
+	</grid>
+</window>

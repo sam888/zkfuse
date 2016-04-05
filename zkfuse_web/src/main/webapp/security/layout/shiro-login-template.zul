@@ -1,0 +1,16 @@
+<zk xmlns="http://www.zkoss.org/2005/zul">
+
+	<borderlayout hflex="1" vflex="1" >
+		<north height="100px" border="none" >
+			<include src="/security/shiro-banner.zul"/>
+		</north>
+
+		<center id="_mainContent" autoscroll="true" border="none" self="@insert(content)">
+			<!-- the main content will be insert to here -->
+		</center>
+
+        <south height="50px" border="none">
+			<include src="/security/footer.zul"/>
+		</south>
+	</borderlayout>
+</zk>

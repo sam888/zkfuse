@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/persistence
+    http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+    <persistence-unit name="zkfuse" transaction-type="RESOURCE_LOCAL">
+        <!-- uncomment these if not using Spring @autowired to detect entity classes
+        -->
+        <class>org.zkfuse.model.i18n.ResourceBundle</class>
+        <class>org.zkfuse.model.i18n.KeyValue</class>
+        <class>org.zkfuse.model.i18n.Locale</class>
+        <class>org.zkfuse.model.i18n.Module</class>
+
+        <class>org.zkfuse.model.security.SecurityPermission</class>
+        <class>org.zkfuse.model.security.SecurityRole</class>
+        <class>org.zkfuse.model.security.SecurityUser</class>
+        <class>org.zkfuse.model.security.SecurityRoleUser</class>
+        <class>org.zkfuse.model.security.SecurityPermissionRole</class>
+        <class>org.zkfuse.model.security.SecurityPermissionRolePK</class>
+        <class>org.zkfuse.model.security.SecurityRoleUserPK</class>
+
+        <properties>
+            <property name="javax.persistence.jdbc.driver"
+                      value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:mysql://localhost:3306/zkfuse"/>
+            <property name="javax.persistence.jdbc.user" value="root"/>
+            <property name="javax.persistence.jdbc.password" value="password"/>
+
+            <!-- required for Persistence.createEntityManagerFactory to retrieve
+                 EntityManagerFactory to obtain EntityManager in code manually
+                 according to Junit test cases -->
+
+            <!--
+             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver" />
+             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/zkfuse" />
+             <property name="hibernate.connection.username" value="root" />
+             <property name="hibernate.connection.password" value="" />
+              -->
+        </properties>
+    </persistence-unit>
+
+</persistence>

@@ -1,0 +1,84 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>zkfuse</artifactId>
+    <groupId>org.zkfuse</groupId>
+    <version>0.0.1-SNAPSHOT</version>
+    <relativePath>..</relativePath>
+  </parent>
+  <artifactId>zkfuse_service</artifactId>
+  <name>zkfuse_service</name>
+  <dependencies>
+  	<dependency>
+  		<groupId>${project.groupId}</groupId>
+  		<artifactId>zkfuse_dao</artifactId>
+  		<version>${project.version}</version>
+  	</dependency>
+  	
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-test</artifactId>
+	</dependency>
+
+    <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+    </dependency>
+    
+    <dependency>
+        <groupId>org.zkoss.common</groupId>
+        <artifactId>zcommon</artifactId>
+    </dependency>
+    
+    <dependency>
+        <groupId>org.powermock</groupId>
+        <artifactId>powermock-module-junit4</artifactId>
+        <scope>test</scope>
+        <version>1.4.12</version>
+    </dependency>
+
+    <dependency>
+	    <groupId>org.powermock</groupId>
+	    <artifactId>powermock-core</artifactId>
+        <version>1.4.12</version>
+        <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.powermock</groupId>
+        <artifactId>powermock-api-easymock</artifactId>
+        <version>1.4.12</version>
+    </dependency>
+
+    <dependency>
+        <groupId>org.powermock</groupId>
+        <artifactId>powermock-module-test-easymock-junit4</artifactId>
+        <version>1.4.12</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.easymock</groupId>
+      <artifactId>easymock</artifactId>
+      <version>3.1</version>
+      <scope>test</scope>
+    </dependency>
+
+
+  </dependencies>
+
+  <build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+			</testResource>
+		</testResources>
+  </build>
+    
+</project>

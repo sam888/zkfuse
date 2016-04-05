@@ -1,0 +1,15 @@
+<?page id="shiro-banner"?>
+<div hflex="1" vflex="1" sclass="banner" >
+	<hbox hflex="1" vflex="1" align="center">
+	    <a href="http://www.zkoss.org/">
+			<image src="/imgs/zklogo.png" width="70px" height="70px"/>
+		</a>
+		<div width="500px" >
+			<label value="Shiro Authentication and Authorization Demo" sclass="banner-head" style="font-size: x-large;"/>
+		</div>
+		<hbox hflex="1" vflex="1" pack="end" align="end">
+            <label id="usernameLabel" style="margin-bottom: 5px"/>
+            <label id="logoutLabel" sclass="logout"/>
+		</hbox>
+	</hbox>
+</div>

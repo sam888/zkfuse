@@ -1,0 +1,33 @@
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+
+     <window title="Confirm" mode="modal" border="normal" width="400px" visible="@load(not empty vm.deleteMessage)">
+        <vbox hflex="true">
+    
+           <hbox height="80px">
+                <image src="~./zul/img/msgbox/question-btn.png"/>
+                <label multiline="true" value="@load(vm.deleteMessage)"/>
+            </hbox>
+            
+            <hbox pack="center" hflex="true">
+                <button label="Delete" onClick="@command('deleteEntity')"/>
+                <button label="Cancel" onClick="@command('cancelDelete')"/>
+            </hbox>
+        </vbox>
+    </window>
+    
+    <window title="Error" mode="modal" border="normal" width="400px" visible="@load(not empty vm.errorMessage)" >
+        <vbox hflex="true">
+
+            <hbox height="80px">
+                <image src="~./zul/img/msgbox/stop-btn.png"/>
+                <label multiline="true" value="@load(vm.errorMessage)" sclass="word-wrap" width="100%" />
+            </hbox>
+            
+            <hbox pack="center" hflex="true">
+                <button label="OK" onClick="@command('clearErrorMessage')"/>
+            </hbox>
+        </vbox>
+	</window>
+		
+</zk>

@@ -1,0 +1,41 @@
+
+<bandbox id="localeBandbox" mold="rounded" autodrop="true"
+	apply="org.zkoss.bind.BindComposer" popup="localePopup, before_start"
+	viewModel="@id('localeVM')  @init('org.zkfuse.web.vm.i18n.LocaleVM')"
+	readonly="false">
+	
+    <custom-attributes command="${arg.command}"/>
+
+	<bandpopup>
+
+		<listbox id="localeListbox" model="@load(localeVM.localeList)"
+			mold="paging" autopaging="true" width="400px" height="200px" pageSize="8"
+			onSelect="@global-command('onSelectLocaleListboxListener', localeListbox=self, namebox=namebox)" >
+
+			<listhead>
+				<listheader label="Id" width="40px" sort="auto(localeId)" />
+				<listheader label="Language Code" align="center" sort="auto(languageCode)" 
+					width="120px" />
+				<listheader label="Country Code" align="center" sort="auto(countryCode)"
+					width="120px" />
+				<listheader label="Variant Code" align="center" sort="auto(variantCode)"
+					width="120px" />
+				<listheader label="Description" align="center"
+					width="200px" />
+			</listhead>
+
+			<template name="model" var="item">
+				<listitem>
+					<listcell label="@load(item.localeId)" />
+					<listcell label="@load(item.languageCode)" />
+					<listcell label="@load(item.countryCode)" />
+					<listcell label="@load(item.variantCode)" />
+					<listcell label="@load(item.description)" />
+				</listitem>
+			</template>
+
+		</listbox>
+
+	</bandpopup>
+
+</bandbox>

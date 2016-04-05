@@ -1,0 +1,30 @@
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+
+    <vbox vflex="1" hflex="1" align="center" pack="center" spacing="20px"
+          apply="org.zkfuse.web.security.controller.ShiroHomeController">
+
+        <div align="left">
+
+            <label value="Database Driven, AJAX-based Navigation Application" sclass="head1" />
+            <separator />
+            <label value="(Only main content area will change when links from left navigation bar are clicked)" />
+            <separator />
+            <separator />
+            <label value="* Only logged in user with Role 'MARKETING_ROLE' can access Marketing Admin Console" ></label>
+            <separator />
+            <label value="* Only logged in user with Role 'SALES_ROLE' can access Sales Admin Console" ></label>
+            <separator />
+            <label value="* Only logged in user with Role 'PRODUCTS_ROLE' can access Products Admin Console" ></label>
+            <separator />
+            <separator />
+            <label value="* Use 'Logout' link at top right banner to log out" ></label>
+
+            <separator height="10px" />
+            <label value="Logged in user with 'ADMIN_ROLE' role can access every Admin Console" sclass="head1" ></label>
+
+        </div>
+
+    </vbox>
+
+</zk>

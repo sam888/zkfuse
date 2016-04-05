@@ -1,0 +1,30 @@
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+
+    <vbox vflex="1" hflex="1" align="center" pack="center" spacing="20px">
+
+        <div align="left">
+            <label value="Database Driven, AJAX-based Navigation Application" sclass="head1" />
+            <separator />
+            <label value="(Only main content area will change when links from left navigation bar are clicked)" />
+            <separator />
+            <separator />
+            <label value="* Use 'User Admin' console to create, delete, update users or assign Role(s) to selected user" />
+            <separator />
+            <label value="* Use 'Role Admin' console to create, delete, update roles or assign Permission(s) to selected role" />
+            <separator />
+            <label value="* Use 'Permission Admin' console to create, delete, update permissions" />
+            <separator />
+            <separator height="10px" />
+
+            <label value="Users created here will be used to login to Shiro Authentication Demo" sclass="head1" />  <separator />
+            E.g. To login as admin in Shiro Authetication Demo, one can create a new user then assign ADMIN_ROLE to it. <separator />
+            Or simply use an existing user with the role 'ADMIN_ROLE'.
+
+            <separator height="10px"/>
+            <label value="Feel free to create, update or delete new users and manage associated roles and permissions" sclass="head1" />
+        </div>
+
+    </vbox>
+
+</zk>

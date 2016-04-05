@@ -1,0 +1,13 @@
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+
+    <vbox vflex="1" hflex="1" align="center" pack="center"  >
+
+       <hbox align="center">
+           <image src="/imgs/access_denied_2.jpg"></image>
+           <label value="Sorry, you don't have access to view this page" sclass="head1" />
+       </hbox>
+
+    </vbox>
+
+</zk>

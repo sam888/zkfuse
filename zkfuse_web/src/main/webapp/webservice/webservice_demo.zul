@@ -1,0 +1,136 @@
+<?page title="Web Services Demo with WS-Policy" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" >
+
+    <zscript>
+        String appUrl = httpClientUtil.getAppUrl();
+    </zscript>
+
+    <panel title="Web Service Demo with CXF"  border="none" style="margin: 20px" hflex="1"  apply="${webServiceDemoController}" >
+
+        <panelchildren>
+
+            <vlayout>
+                <grid hflex="1">
+                    <columns>
+                        <column align="right" hflex="min"/>
+                        <column/>
+                    </columns>
+                    <rows>
+
+                        <row>
+                             <separator />
+                        </row>
+                        <row>
+
+                            <cell colspan="2" align="left" style="height: 0">
+                               This web service demo will showcase the use of WS-Policy in CXF framework by allowing the user to select a web service <separator/>
+                               from the drop down list, then click the Send button to see the soap request and response created in real time.<separator/>
+
+                               <separator style="margin-top: 10px"/>
+                               All the web services from the drop down list are the same and running in this demo app except they all have different WS-Policy <separator/>
+                               (or WS-SecurityPolicy) specified in the WSDL for different usage scenarios and different xml configuration for encryption and signing. <separator/>
+                               See Description field below for scenario of each WS-Policy used in the web service.<separator style="margin-top: 10px"/>
+
+                               What do all these web services do? Well, they simply takes the number from Input field below then returns the doubled number in soap response.<separator/>
+                               Credits for these web services go to Glen Mazza and it's available for download
+                               <a href="https://github.com/gmazza/blog-samples" target="_blank"> here</a>. <separator/>
+                               One can read more about how to set up and run these web services in his blog
+                               <a href="http://www.jroller.com/gmazza/entry/cxf_x509_profile" target="_blank" > here</a>.
+
+                               <separator style="margin-top: 10px"/>
+                               Since this is a WSDL first web service, the WS-Policy used is available from WSDL url (i.e. http://...?wsdl). See WSDL text area <separator />
+                               below for WS-Policy of selected web service. <separator style="margin-top: 10px"/>
+
+                               Basically, different WS-Policy can be applied to the WSDL of the same web service to generate different soap request with <separator/>
+                               minimal code and configuration change, depending on usage scenarios.
+
+                               <separator style="margin-top: 15px"/>
+
+                               A list of all the running web services' WSDL is available <a href="${appUrl}/wsservice" target="_blank"  > here</a>.
+                            </cell>
+                        </row>
+                        <row>
+                            <cell sclass="row-title">Web Service:</cell>
+                            <cell>
+                                <combobox id="webServiceCombo" mold="rounded" width="400px">
+                                    <comboitem id="ut-hash" label="UsernameToken with hashed password" />
+                                    <comboitem id="x509-asym" label="X509 asymmetric message protection" />
+                                    <comboitem id="ut-x509-sym" label="UsernameToken with X509 symmetric message protection" />
+                                    <comboitem id="ut-x509-asym" label="UsernameToken with X509 asymmetric message protection" />
+                                </combobox>
+                            </cell>
+                        </row>
+                        <row>
+                            <cell sclass="row-title">Reference:</cell>
+                            <cell>
+                                <a id="refLink" target="_blank"  />
+                            </cell>
+                        </row>
+                        <row>
+                            <cell sclass="row-title">Description:</cell>
+                            <cell>
+                                <textbox id="descriptionTextbox" value="" rows="6" cols="130" mold="rounded"/>
+                            </cell>
+                        </row>
+                        <row>
+                            <cell sclass="row-title">WSDL:</cell>
+                            <cell>
+                                <textbox id="wsdlTextbox" rows="8" cols="140" mold="rounded" style="overflow: auto;"/>
+                            </cell>
+                        </row>
+                        <row>
+                            <cell sclass="row-title">Input:</cell>
+                            <cell>
+                                <hlayout>
+                                    <intbox id="inputIntbox" mold="rounded" /> <button id="sendWebServiceButton" label="Send" autodisable="sendWebServiceButton"/>
+                                </hlayout>
+                            </cell>
+                        </row>
+                        <row>
+                            <cell sclass="row-title">Soap Request and Response:</cell>
+                            <cell>
+                                <grid id="request_response_grid" width="100%" onFulfill="true">
+                                    <columns>
+                                        <column hflex="1" />
+                                        <column width="20px" />
+                                        <column hflex="1"/>
+                                    </columns>
+                                    <rows>
+                                        <row>
+                                            <panel title="Soap Request" border="normal" collapsible="true" framable="true" >
+                                                <panelchildren >
+                                                    <textbox id="soapRequestTextbox" rows="12"  mold="rounded" style="overflow: auto;" hflex="1" />
+                                                </panelchildren>
+                                            </panel>
+                                            <label />
+                                            <panel title="Soap Response" border="normal" collapsible="true" framable="true">
+                                                <panelchildren >
+                                                    <textbox id="soapResponseTextbox" rows="12"  mold="rounded" style="overflow: auto;" hflex="1" />
+                                                </panelchildren>
+                                            </panel>
+                                        </row>
+                                    </rows>
+                                </grid>
+                            </cell>
+                        </row>
+                    </rows>
+                </grid>
+            </vlayout>
+
+        </panelchildren>
+    </panel>
+
+    <separator style="margin-top: 40px"/>
+    <!--
+        <zscript><![CDATA[
+            usernameHashDescription="This WS-SecurityPolicy template will transmit the message in plain text but protects password by hashing password with SHA algorithm.\n\n" +
+            "For production, this template is best used with SSL/TLS to protect message at transport layer.";
+
+        ]]>
+        </zscript>
+
+        <label id="usernameTokenHashingLabel" value="${usernameHashDescription}" visible="false"/>
+    -->
+</zk>

@@ -1,0 +1,119 @@
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<window	apply="org.zkoss.bind.BindComposer" xmlns="http://www.zkoss.org/2005/zul"
+           viewModel="@id('vm') @init('org.zkfuse.web.security.vm.SecurityPermissionViewModel')"
+           validationMessages="@id('vmsgs')" border="normal" hflex="1" vflex="1" contentStyle="overflow:auto">
+
+    <caption src="/imgs/permission.jpg" sclass="fn-caption" label="Permission Admin" />
+
+    <borderlayout>
+
+        <center autoscroll="true" border="none" >
+
+            <panel framable="true" title="Permission List" style="margin-right: 10px">
+                <panelchildren>
+
+                    <vlayout hflex="1" >
+
+                        <listbox model="@load(vm.entityList)" selectedItem="@bind(vm.selected)" hflex="true" height="250px"
+                                 style="border: none" mold="paging" pageSize="7">
+                            <listhead>
+                                <listheader label="Id" width="80px" sort="auto(permissionId)" />
+                                <listheader label="Permission Name" width="180px" sort="auto(permissionName)" />
+                                <listheader label="Description" align="center" width="180px" sort="auto(description)" />
+                                <listheader label="" align="center" width="100%" />
+                            </listhead>
+                            <template name="model" var="item">
+                                <listitem >
+                                    <listcell label="@load(item.permissionId)"/>
+                                    <listcell label="@load(item.permissionName)"/>
+                                    <listcell label="@load(item.description)"/>
+                                    <listcell label="" />
+                                </listitem>
+                            </template>
+                        </listbox>
+
+                    </vlayout>
+
+                </panelchildren>
+
+                <toolbar mold="panel" align="start">
+                    <hlayout>
+                        <button id="newBtn" label="New Permission" onClick="@command('newEntity')" autodisable="newBtn" />
+                    </hlayout>
+                </toolbar>
+
+            </panel>
+
+        </center>
+        <east visible="@bind(not empty vm.selected)" width="350px" border="none" collapsible="false" splittable="true" minsize="300" autoscroll="true">
+            <panel title="Permission Details" style="margin-right: 10px" >
+                <panelchildren style="border: none">
+
+                    <vlayout form="@id('fx') @load(vm.selected) @save(vm.selected, before='saveEntity')" visible="@bind(not empty vm.selected)" >
+
+                        <grid hflex="1">
+                            <columns>
+                                <column align="right" hflex="min"/>
+                                <column/>
+                            </columns>
+                            <rows>
+                                <row>
+                                    <cell sclass="row-title">Id:</cell>
+                                    <cell>
+                                        <hlayout>
+                                            <label value="@bind(fx.permissionId)" />
+                                            <image src="@load(fxStatus.dirty?'exclamation.png':'')" />
+                                        </hlayout>
+                                    </cell>
+                                </row>
+
+                                <row>
+                                    <cell sclass="row-title">Role Name:</cell>
+                                    <cell>
+                                        <textbox id="permissionNameBox" value="@bind(fx.permissionName) @validator(vm.jsr303Validator)" mold="rounded" hflex="1" />
+                                    </cell>
+                                </row>
+                                <row>
+                                    <cell/>
+                                    <cell>
+                                        <label value="@load(vmsgs[permissionNameBox])" sclass="warn" />
+                                    </cell>
+                                </row>
+
+                                <row>
+                                    <cell sclass="row-title">Description:</cell>
+                                    <cell>
+                                        <textbox id="descriptionBox" value="@bind(fx.description) @validator(vm.jsr303Validator)" mold="rounded" hflex="1" rows="3" />
+                                    </cell>
+                                </row>
+
+                            </rows>
+                        </grid>
+
+                        <toolbar mold="panel" align="center">
+                            <hlayout>
+                                <button id="saveBtn" label="Save" onClick="@command('saveEntity')" disabled="@bind(empty vm.selected)" autodisable="saveBtn,deleteBtn" />
+                                <button id="deleteBtn" label="Delete" onClick="@command(empty vm.selected.permissionId?'deleteEntity':'confirmDelete')"
+                                        autodisable="saveBtn,deleteBtn" disabled="@load(empty vm.selected)" />
+                            </hlayout>
+                        </toolbar>
+
+                    </vlayout>
+                </panelchildren>
+
+            </panel>
+
+        </east>
+    </borderlayout>
+    <include src="/common/messageDialogs.zul" />
+
+    <style>
+        .pointer {
+            cursor: pointer;
+        }
+        .actionColumn {
+            margin: 70px 34px;
+        }
+    </style>
+
+</window>

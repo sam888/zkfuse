@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>zkfuse</artifactId>
+        <groupId>org.zkfuse</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>..</relativePath>
+    </parent>
+
+    <artifactId>zkfuse_web_service</artifactId>
+    <name>zkfuse_web_service</name>
+    <description>Project for web services</description>
+
+    <dependencies>
+
+        <!--<dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>zkfuse_service</artifactId>
+            <version>${project.version}</version>
+        </dependency>-->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+
+        <!-- need spring-web because of cxf. other wise cxf will use old version of spring -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-rt-ws-policy</artifactId>
+        </dependency>
+
+        <!-- client -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+
+            <!-- war -->
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-frontend-jaxws</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-ws-security</artifactId>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-rt-transports-http</artifactId>
+            </dependency>
+
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <includes>
+                    <include>**</include>
+                </includes>
+            </testResource>
+        </testResources>
+
+        <plugins>
+
+            <!-- To generate API docs manually with 'mvn enunciate:docs'  -->
+            <plugin>
+                <groupId>org.codehaus.enunciate</groupId>
+                <artifactId>maven-enunciate-plugin</artifactId>
+                <version>${enunciate.version}</version>
+                <configuration>
+                    <docsDir>${project.build.directory}/docs</docsDir>
+                    <configFile>src/enunciate/enunciate.xml</configFile>
+
+                    <!-- TODO: use these latter -->
+                    <enunciateArtifactId/>
+                    <moduleName/>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <configuration>
+                    <descriptors>
+                        <descriptor>src/assembly/jaxws-jar.xml</descriptor>
+                    </descriptors>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.cxf</groupId>
+                <artifactId>cxf-codegen-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <configuration>
+                            <sourceRoot>
+                                ${basedir}/target/generated-sources
+                            </sourceRoot>
+                            <wsdlOptions>
+                                <wsdlOption>
+                                    <wsdl>
+                                        ${basedir}/src/main/resources/un_x509_sym_webservice/DoubleIt.wsdl
+                                    </wsdl>
+                                    <wsdlLocation>classpath:un_x509_sym_webservice/DoubleIt.wsdl</wsdlLocation>
+                                </wsdlOption>
+                                <wsdlOption>
+                                    <wsdl>
+                                        ${basedir}/src/main/resources/un_hashed_password/DoubleIt.wsdl
+                                    </wsdl>
+                                    <wsdlLocation>classpath:un_hashed_password/DoubleIt.wsdl</wsdlLocation>
+                                </wsdlOption>
+                                <wsdlOption>
+                                    <wsdl>
+                                        ${basedir}/src/main/resources/un_x509_asym_webservice/DoubleIt.wsdl
+                                    </wsdl>
+                                    <wsdlLocation>classpath:un_x509_asym_webservice/DoubleIt.wsdl</wsdlLocation>
+                                </wsdlOption>
+                                <wsdlOption>
+                                    <wsdl>
+                                        ${basedir}/src/main/resources/x509_asym_webservice/DoubleIt.wsdl
+                                    </wsdl>
+                                    <wsdlLocation>classpath:x509_asym_webservice/DoubleIt.wsdl</wsdlLocation>
+                                </wsdlOption>
+                            </wsdlOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>withAPIDocs</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.enunciate</groupId>
+                        <artifactId>maven-enunciate-plugin</artifactId>
+                        <version>${enunciate.version}</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>docs</goal>
+                                </goals>
+                                <configuration>
+                                    <docsDir>${project.build.directory}/docs</docsDir>
+                                    <configFile>src/enunciate/enunciate.xml</configFile>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>make shared resources</id>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                                <phase>package</phase>
+                                <configuration>
+                                    <descriptors>
+                                        <descriptor>src/enunciate/assembly.xml</descriptor>
+                                    </descriptors>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+</project>

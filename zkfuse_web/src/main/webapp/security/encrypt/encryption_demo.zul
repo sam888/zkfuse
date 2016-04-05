@@ -1,0 +1,174 @@
+<?init class="org.zkoss.zkplus.databind.AnnotateDataBinderInit" ?>
+<?page title="Encryption Demo" contentType="text/html;charset=UTF-8"?>
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" >
+
+    <style>
+        <!-- change font color from gray to black -->
+        div.z-column-cnt, div.z-row-cnt { color: black; }
+    </style>
+
+    <vlayout>
+        <panel title="Symmetric Key Algorithm" border="normal" style="margin: 20px;" hflex="1" apply="${encryptionDemoController}" >
+
+            <panelchildren>
+
+                <vlayout>
+
+                    <!-- scrollbar support in contentStyle below available in ZK EE only -->
+                    <groupbox  mold="3d" hflex="1" closable="false" contentStyle="overflow:auto" style="margin: 20px">
+                        <caption label="Algorithms"/>
+                        <hlayout style="margin: 20px">
+
+                            <label value="Algorithm:"/>
+                            <separator spacing="20px" />
+                            <combobox id="symKeyAlgorithmCombo" mold="rounded" width="350px">
+                                <comboitem id="two-fish" label="Two Fish" />
+                                <comboitem id="aes" label="AES" />
+                                <comboitem id="rijndael" label="Rijndael" />
+                            </combobox>
+
+                        </hlayout>
+                        <div width="50%">
+                            <label value="${labels.symmetric.key.description}" />
+                        </div>
+
+                    </groupbox>
+
+                    <groupbox mold="3d" hflex="1" closable="false" contentStyle="overflow:auto" style="margin: 0 20px">
+                        <caption label="Encryption Key"/>
+                        <grid style="border: none; margin: 0 20px">
+                            <columns>
+                                <column hflex="min" align="right"/>
+                                <column hflex="min" align="left"/>
+                            </columns>
+                            <rows>
+                                <row>
+                                    <label value="Size in bits:"/>
+                                    <cell>
+                                        <hlayout>
+                                            <combobox id="encryptKeySizeCombo" mold="rounded" width="70px">
+                                                <comboitem label="128" />
+                                                <comboitem label="192" />
+                                                <comboitem label="256" />
+                                            </combobox>
+                                            <separator spacing="20px" />
+                                            <button id="generateEncryptKeyButton" label="Generate" />
+
+                                            <separator width="20px" />
+                                            <label value="Tip" tooltip="any" style="font-weight: bold"/>
+                                            <popup id="any" width="400px" >
+                                                <div style="color: black" align="left">
+                                                    <label multiline="true">
+                                                        Always select the highest number of bits if performance penalty is negligible.
+
+                                                        What's the point of selecting 128 bits if govt may crack it with a
+                                                        cluster of super computers! ;)
+                                                    </label>
+                                                </div>
+                                            </popup>
+
+                                        </hlayout>
+                                    </cell>
+                                </row>
+                                <row>
+                                    <label value="Key:"/>
+                                    <textbox id="encryptKeyTextbox" mold="rounded" cols="60"/>
+                                </row>
+                            </rows>
+
+                        </grid>
+
+                    </groupbox>
+                    <separator height="10px" />
+
+                    <groupbox mold="3d" hflex="1" closable="false" contentStyle="overflow:auto" style="margin: 0 20px">
+                        <caption label="Encrypt/Decrypt Data"/>
+                        <grid style="border: none; margin: 0 20px">
+                            <columns>
+                                <column hflex="min" align="right"/>
+                                <column hflex="min" align="left"/>
+                            </columns>
+                            <rows>
+                                <row>
+                                    <label value="Data:"/>
+                                    <textbox id="processDataTextbox" mold="rounded" cols="65" />
+                                </row>
+                                <row>
+                                    <cell />
+                                    <hlayout>
+                                        <radiogroup id="encryptRadioGroup">
+                                            <radio id="encryptRadio" label="Encrypt"/> <space width="10px"/> <radio id="decryptRadio" label="Dencrypt"/>
+                                        </radiogroup>
+                                        <space width="10px"/>
+                                        <button id="processDataButton" label="Process"/>
+                                    </hlayout>
+                                </row>
+                                <row>
+                                    <label value="Processed Data:"/>
+                                    <textbox id="processedDataTextbox" mold="rounded" cols="65" />
+                                </row>
+                            </rows>
+
+                        </grid>
+
+                    </groupbox>
+                    <separator height="10px" />
+                </vlayout>
+
+            </panelchildren>
+        </panel>
+
+        <!--<panel title="Message Digest" border="normal" style="margin: 0 20px;" hflex="1"  >
+
+            <panelchildren >
+
+                <vlayout >
+
+                    &lt;!&ndash; scrollbar support in contentStyle below available in ZK EE only &ndash;&gt;
+                    <groupbox  mold="3d" hflex="1" closable="false" contentStyle="overflow:auto" style="margin: 20px">
+                        <caption label="Algorithms"/>
+
+                        <grid style="border: none; margin: 0 20px">
+                            <columns>
+                                <column hflex="min" align="right"/>
+                                <column hflex="min" align="left"/>
+                            </columns>
+                            <rows>
+                                <row>
+                                    <label value="Algorithm:"/>
+
+                                    <hlayout>
+                                        <combobox id="" mold="rounded" width="150px">
+                                        </combobox>
+                                        <separator spacing="20px" />
+                                        <button label="Generate" />
+                                    </hlayout>
+                                </row>
+                                <row>
+                                    <label value="Salt:"/>
+                                    <textbox  mold="rounded" cols="65" />
+                                </row>
+                                <row>
+                                    <label value="Digested Message:"/>
+                                    <textbox  mold="rounded" cols="65" />
+                                </row>
+                            </rows>
+                        </grid>
+
+                        <separator height="10px" />
+                        <div width="50%">
+                            <label value="${labels.message.digest.description}"  multiline="true"/>
+                        </div>
+                    </groupbox>
+
+                </vlayout>
+
+            </panelchildren>
+        </panel>-->
+
+    </vlayout>
+    <separator style="margin-top: 40px"/>
+
+</zk>

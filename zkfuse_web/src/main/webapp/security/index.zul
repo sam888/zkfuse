@@ -1,0 +1,7 @@
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?init class="org.zkoss.zk.ui.util.Composition" arg0="/security/layout/template.zul"?>
+<?page title="User Security Admin Demo" contentType="text/html;charset=UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+	<include id="mainInclude" self="@define(content)" src="/security/home.zul"/>
+
+</zk>

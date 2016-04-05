@@ -1,0 +1,27 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xmlns:jaxws="http://cxf.apache.org/jaxws"
+   xmlns:context="http://www.springframework.org/schema/context"
+   xsi:schemaLocation="http://www.springframework.org/schema/beans
+   http://www.springframework.org/schema/beans/spring-beans.xsd
+   http://cxf.apache.org/jaxws 
+   http://cxf.apache.org/schemas/jaxws.xsd
+   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+   <context:component-scan base-package="org.zkfuse.webservice" />
+
+    <jaxws:client name="{http://www.example.org/contract/usernametoken_x509_symmetric/DoubleIt}DoubleItPort" createdFromAPI="true" >
+        <!-- Use this for the UsernameToken Symmetric Binding w/X.509 for secret key derivation -->
+        <jaxws:properties>
+            <entry key="ws-security.username" value="alice"/>
+            <entry key="ws-security.callback-handler" value="org.zkfuse.webservice.client.un.x509.sym.ClientPasswordCallback"/>
+
+            <entry key="ws-security.encryption.properties" value="un_x509_sym_webservice/clientKeystore.properties"/>
+            <entry key="ws-security.encryption.username" value="myservicekey"/>
+
+        </jaxws:properties>
+
+    </jaxws:client>
+
+</beans>
+

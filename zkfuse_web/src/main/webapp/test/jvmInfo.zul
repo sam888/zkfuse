@@ -1,0 +1,57 @@
+<?variable-resolver class="org.zkoss.zkplus.spring.DelegatingVariableResolver"?>
+<zk xmlns:h="http://www.w3.org/1999/xhtml">
+
+    <!--<div id="jVMInformationWin" apply="org.zkfuse.web.controller.performance.JVMInfoController"
+         align="center" height="100%">-->
+
+    <div id="jVMInformationWin" apply="${JVMInfoController}"
+         align="center" height="100%">
+
+        <grid id="contentPanelGrid" sclass="GridLayoutNoBorder" vflex="1" >
+            <columns>
+                <column id="column1" width="5%"  align="right"></column>
+                <column id="column2" width="10%" align="left"></column>
+                <column id="column3" width="15%" align="left"></column>
+                <column id="column4" width="70%" align="left"></column>
+            </columns>
+            <rows id="parentRows">
+                <row>
+                    <cell colspan="4" height="100px"/>
+                </row>
+                <row id ="titleRow">
+                    <cell colspan="4" valign="center" align="center" height="100px">
+                       <label style="font-weight: bold" value="------   JVM Information    -------">
+                       </label>
+                    </cell>
+                </row>
+                <row>
+                    <cell colspan="4" height="50px"/>
+                </row>
+                <row>
+                    <label value=""/>
+                    <label value="Total Memory : "/>
+                    <label id="totalMemory"/>
+                    <label value=""/>
+                </row>
+                <row>
+                    <label value=""/>
+                    <label value="Used Memory : "/>
+                    <label id="usedMemory"/>
+                    <label value=""/>
+                </row>
+                <row>
+                    <label value=""/>
+                    <label value="Free Memory : "/>
+                    <label id="freeMemory"/>
+                    <label value=""/>
+                </row>
+                <row>
+                    <label value=""/>
+                    <label value="Max Memory : "/>
+                    <label id="maxMemory"/>
+                    <label value=""/>
+                </row>
+            </rows>
+        </grid>
+    </div>
+</zk>

@@ -1,0 +1,192 @@
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<window	apply="org.zkoss.bind.BindComposer" xmlns="http://www.zkoss.org/2005/zul"
+           viewModel="@id('vm') @init('org.zkfuse.web.security.vm.SecurityRoleViewModel')"
+           validationMessages="@id('vmsgs')" border="normal" hflex="1" vflex="1" contentStyle="overflow:auto">
+
+    <caption src="/imgs/role.jpg" sclass="fn-caption" label="Role Admin" />
+
+    <borderlayout>
+
+        <center autoscroll="true" border="none" >
+
+            <vlayout style="margin-right: 10px">
+
+                <panel framable="true" title="Role List" style="margin-right: 10px">
+                    <panelchildren>
+
+                        <vlayout hflex="1" >
+
+                            <listbox model="@load(vm.entityList)" selectedItem="@bind(vm.selected)" hflex="true" height="250px"
+                                     style="border: none" mold="paging" pageSize="7" >
+                                <listhead>
+                                    <listheader label="Id" width="80px" sort="auto(roleId)" />
+                                    <listheader label="Role Name" width="180px" sort="auto(roleName)" />
+                                    <listheader label="Description" align="center" width="180px" sort="auto(description)" />
+                                    <listheader label="" align="center" width="100%" />
+                                </listhead>
+                                <template name="model" var="item">
+                                    <listitem >
+                                        <listcell label="@load(item.roleId)" onClick="@command('reloadAvailableAndAssignedPermissionLists')" />
+                                        <listcell label="@load(item.roleName)" onClick="@command('reloadAvailableAndAssignedPermissionLists')"/>
+                                        <listcell label="@load(item.description)" onClick="@command('reloadAvailableAndAssignedPermissionLists')"/>
+                                        <listcell label="" />
+                                    </listitem>
+                                </template>
+                            </listbox>
+
+                        </vlayout>
+
+
+                    </panelchildren>
+
+                    <toolbar mold="panel" align="start">
+                        <hlayout>
+                            <button id="newBtn" label="New Role" onClick="@command('newEntity')" autodisable="self"/>
+                        </hlayout>
+                    </toolbar>
+
+                </panel>
+                <separator height="10px" />
+
+                <div visible="@bind(not empty vm.selected.roleId)">
+
+                    <vlayout>
+                        <grid hflex="1">
+                            <columns>
+                                <column hflex="1"/>
+                                <column hflex="min"/>
+                                <column hflex="1"/>
+                            </columns>
+                            <rows>
+                                <row>
+                                    <cell>
+                                        <panel title="Available Permissions:">
+                                            <panelchildren>
+                                                <listbox id="left" model="@load(vm.availableSecurityPermissionModelList)" height="200px"
+                                                         oddRowSclass="non-odd" checkmark="true">
+                                                    <template name="model">
+                                                        <listitem>
+                                                            <listcell label="@load(each.permissionName)" />
+                                                        </listitem>
+                                                    </template>
+                                                </listbox>
+                                            </panelchildren>
+                                        </panel>
+                                    </cell>
+                                    <cell >
+                                        <panel>
+                                            <panelchildren class="actionColumn">
+                                                <image sclass="pointer" tooltiptext="Add Permission(s)"
+                                                       src="/imgs/ButtonArrowRight32.png"
+                                                       onClick="@command('addSecurityPermissions')">
+                                                </image>
+                                                <separator height="15px"/>
+                                                <image sclass="pointer" tooltiptext="Remove Permission(s)"
+                                                       src="/imgs/ButtonArrowLeft32.png"
+                                                       onClick="@command('removeSecurityPermissions')">
+                                                </image>
+                                            </panelchildren>
+                                        </panel>
+                                    </cell>
+                                    <cell>
+                                        <panel title="Permission(s) assigned to selected Role:" >
+                                            <panelchildren>
+                                                <listbox id="right" model="@load(vm.assignedSecurityPermissionModelList)" height="200px"
+                                                         oddRowSclass="non-odd" checkmark="true">
+                                                    <template name="model">
+                                                        <listitem>
+                                                            <listcell label="@load(each.permissionName)" />
+                                                        </listitem>
+                                                    </template>
+                                                </listbox>
+                                            </panelchildren>
+                                        </panel>
+                                    </cell>
+                                </row>
+                            </rows>
+                        </grid>
+                    </vlayout>
+
+                    <toolbar mold="panel" align="center">
+                        <hlayout>
+                            <button label="Save Assigned Permissions" onClick="@command('saveSecurityPermissionsToRole')" disabled="@bind(empty vm.selected)" autodisable="self"/>
+                        </hlayout>
+                    </toolbar>
+
+                </div>
+
+            </vlayout>
+
+        </center>
+
+        <east visible="@bind(not empty vm.selected)" width="350px" border="none" collapsible="false" splittable="true" minsize="300" autoscroll="true">
+            <panel title="Role Details" style="margin-right: 10px">
+                <panelchildren style="border: none">
+
+                    <vlayout form="@id('fx') @load(vm.selected) @save(vm.selected, before='saveEntity')" visible="@bind(not empty vm.selected)" >
+
+                        <grid hflex="1">
+                            <columns>
+                                <column align="right" hflex="min"/>
+                                <column/>
+                            </columns>
+                            <rows>
+                                <row>
+                                    <cell sclass="row-title">Id:</cell>
+                                    <cell>
+                                        <hlayout>
+                                            <label value="@bind(fx.roleId)" />
+                                            <image src="@load(fxStatus.dirty?'exclamation.png':'')" />
+                                        </hlayout>
+                                    </cell>
+                                </row>
+
+                                <row>
+                                    <cell sclass="row-title">Role Name:</cell>
+                                    <cell>
+                                        <textbox id="roleNameBox" value="@bind(fx.roleName) @validator(vm.jsr303Validator)" mold="rounded" hflex="1" />
+                                    </cell>
+                                </row>
+                                <row>
+                                    <cell/>
+                                    <cell>
+                                        <label value="@load(vmsgs[roleNameBox])" sclass="warn" />
+                                    </cell>
+                                </row>
+
+                                <row>
+                                    <cell sclass="row-title">Description:</cell>
+                                    <cell>
+                                        <textbox id="descriptionBox" value="@bind(fx.description) @validator(vm.jsr303Validator)" mold="rounded" hflex="1" rows="3" />
+                                    </cell>
+                                </row>
+
+                            </rows>
+                        </grid>
+
+                        <toolbar mold="panel" align="center">
+                            <hlayout>
+                                <button id="saveBtn" label="Save" onClick="@command('saveEntity')" disabled="@bind(empty vm.selected)" autodisable="saveBtn,deleteBtn"/>
+                                <button id="deleteBtn" label="Delete" onClick="@command(empty vm.selected.roleId?'deleteEntity':'confirmDelete')"
+                                        disabled="@load(empty vm.selected)" autodisable="saveBtn,deleteBtn" />
+                            </hlayout>
+                        </toolbar>
+
+                    </vlayout>
+                </panelchildren>
+            </panel>
+
+        </east>
+    </borderlayout>
+    <include src="/common/messageDialogs.zul" />
+
+    <style>
+        .pointer {
+            cursor: pointer;
+        }
+        .actionColumn {
+            margin: 70px 34px;
+        }
+    </style>
+
+</window>

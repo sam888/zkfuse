@@ -1,0 +1,171 @@
+<?component name="localeBandbox" macroURI="/widgets/composite/macros/localeBandboxMacro.zul"
+    class="org.zkfuse.web.ui.macro.i18n.LocaleBandbox" ?>
+<?component name="moduleBandbox" macroURI="/widgets/composite/macros/moduleBandboxMacro.zul"
+    class="org.zkfuse.web.ui.macro.i18n.ModuleBandbox" ?>
+    
+<zk xmlns="http://www.zkoss.org/2005/zul">
+	<style>
+		.z-label.red{
+		    color:red;
+		}
+	</style>
+
+<window title="Resource Bundle Management" border="normal" width="100%"
+    apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkfuse.web.vm.i18n.ResourceBundleVM')"  
+        validationMessages="@id('vmsgs')" id="mainWin" contentStyle="overflow:auto;" height="100%">
+
+    <vbox hflex="true" style="margin-right: 20px">
+    
+        <hbox align="left" height="50px" >
+            <space/>
+            
+            <label value="Resource Bundle Name" />
+            <textbox id="resourceBundleNameTextbox" mold="rounded"/>
+            <space/>
+            
+            <button id="searchBtn" label="Search" onClick="@command('searchResourceBundleByWildCardName', resourceBundleNameTextbox=resourceBundleNameTextbox)"
+                    autodisable="searchBtn,clearBtn,showAllBtn,resetAllBtn" />
+            <button id="clearBtn" label="Clear" onClick="@command('clearButton', resourceBundleNameTextbox=resourceBundleNameTextbox)"
+                    autodisable="searchBtn,clearBtn,showAllBtn,resetAllBtn" />
+            <button id="showAllBtn" label="Show All" onClick="@command('getAllResourceBundle')" autodisable="searchBtn,clearBtn,showAllBtn,resetAllBtn" />
+            
+            <space/>
+            <button id="resetAllBtn" label="Reset All" onClick="@command('reloadAllResourceBundle')" autodisable="searchBtn,clearBtn,showAllBtn,resetAllBtn" />
+        </hbox>
+        <label value="Select an item from resource bundle list below to edit all the labels associated with it. Don't forget to click the Reload
+        button below to clear the cache for any label change to take effect." /> <separator />
+
+       <listbox model="@load(vm.entityList)" selectedItem="@bind(vm.selected)" hflex="true" height="200px" >
+            <listhead>
+                <listheader label="Id" width="80px"  sort="auto(resourceBundleId)" />
+                <listheader label="Name" align="center" width="200px" sort="auto(resourceBundleName)"  />
+                <listheader label="Locale" align="center" width="160px" sort="auto(locale.label)" />
+                <listheader label="Module" align="center" width="120px" sort="auto(module.name)" />
+                <listheader label="Description" align="center" width="200px" />                
+                <listheader label="" align="center" width="100%" />
+            </listhead>
+            <template name="model" var="item" >
+                <listitem>
+
+                    <listcell label="@load(item.resourceBundleId)" onClick="@global-command('initResourceBundleInKeyValueVM', resourceBundle=vm.selected)" />              
+                    <listcell label="@load(item.resourceBundleName)" onClick="@global-command('initResourceBundleInKeyValueVM', resourceBundle=vm.selected)" />
+                    <listcell label="@load(item.locale.label)" onClick="@global-command('initResourceBundleInKeyValueVM', resourceBundle=vm.selected)"/>
+                    <listcell label="@load(item.module.name)" onClick="@global-command('initResourceBundleInKeyValueVM', resourceBundle=vm.selected)"/>
+                    <listcell label="@load(item.description)" onClick="@global-command('initResourceBundleInKeyValueVM', resourceBundle=vm.selected)"/>
+                    <listcell label=""                       onClick="@global-command('initResourceBundleInKeyValueVM', resourceBundle=vm.selected)"/>
+                    
+                    <!-- 
+                        inefficient approach for fast prototype only
+	                    <listcell label="@load(item.resourceBundleId)" onClick="keyValueGridPage.invalidate();" />  
+	                    <listcell label="@load(item.resourceBundleName)" onClick="keyValueGridPage.invalidate();" />
+	                    <listcell label="@load(item.locale.label)" onClick="keyValueGridPage.invalidate();"/>
+	                    <listcell label="@load(item.module.name)" onClick="keyValueGridPage.invalidate();"/>
+	                    <listcell label="@load(item.description)" onClick="keyValueGridPage.invalidate();"/>
+	                    <listcell label=""                        onClick="keyValueGridPage.invalidate();"/> 
+                    -->
+                </listitem> 
+            </template>
+        </listbox>
+
+        <toolbar mold="panel">
+            <button id="newBtn" label="New" onClick="@command('newEntity')" autodisable="newBtn,saveBtn,delteBtn,reloadBtn,downloadBtn" />
+            <button id="saveBtn" label="Save" onClick="@command('saveEntity') @global-command('initResourceBundleInKeyValueVM', resourceBundle=vm.selected)"
+                disabled="@bind(empty vm.selected)" autodisable="newBtn,saveBtn,delteBtn,reloadBtn,downloadBtn" />
+            <button id="delteBtn" label="Delete" onClick="@command( empty vm.selected.resourceBundleId ? 'deleteEntity' : 'confirmDelete' )"
+                    disabled="@load(empty vm.selected)" autodisable="newBtn,saveBtn,delteBtn,reloadBtn,downloadBtn" />
+            <space />
+            <button id="reloadBtn" label="Reload" onClick="@command('reloadResourceBundle')" disabled="@bind(empty vm.selected.resourceBundleId)"
+                    autodisable="newBtn,saveBtn,delteBtn,reloadBtn,downloadBtn" />
+            <button id="downloadBtn" label="Download" onClick="@command('downloadResourceBundleAsPropertiesFile')"
+                    disabled="@bind(empty vm.selected.resourceBundleId)" autodisable="newBtn,saveBtn,delteBtn,reloadBtn,downloadBtn" />
+        </toolbar>
+
+        <groupbox form="@id('fx') @init(vm.myForm) @load(vm.selected) @save(vm.selected, before='saveEntity') @validator(vm.resourceBundleValidator)" 
+            visible="@bind(not empty vm.selected)" hflex="true" mold="3d"  droppable="false" >
+            
+            <caption sclass="block" label="Resource Bundle"/>
+            
+            <grid hflex="true" >
+                <columns>
+                    <column width="120px"/>
+                    <column/>
+                </columns>
+                <rows>
+                    <row>
+                        Id
+                        <hlayout>
+                            <label value="@bind(fx.resourceBundleId)" />
+                            <image src="@load(fxStatus.dirty?'exclamation.png':'')" />
+                        </hlayout>
+                    </row> 
+                    <row>
+                        Name
+                        <hlayout>
+                            <textbox id="namebox" value="@bind(fx.resourceBundleName) @validator(vm.jsr303Validator)" 
+                               readonly="true" cols="50" maxlength="255"  mold="rounded" />
+                            <label value="@load(vmsgs[namebox])" sclass="red" />
+                        </hlayout>
+                    </row> 
+                  
+                    <row>
+                        Locale
+                        <hlayout>
+                           <localeBandbox id="set_locale" command="set_locale" locale="@bind(fx.locale)" />
+                           <label value="@bind(vmsgs['localeMsgKey'])" sclass="red" />
+                        </hlayout>
+                    </row>
+
+                    <row>
+                        Module
+                        <hlayout>
+	                        <moduleBandbox id="set_module" command="set_module" module="@bind(fx.module)" />
+                            <label value="@bind(vmsgs['moduleMsgKey'])" sclass="red"  />
+                        </hlayout>
+                    </row>
+
+                    <row>Description <textbox value="@bind(fx.description)" rows="3" cols="40" mold="rounded"/></row> 
+                    
+                    <row visible="@bind(not empty fx.resourceBundleId)" >
+                        <cell colspan="2" >
+                            <include id="keyValueGridPage" src="/i18n/include/keyValueGrid.zul" />
+                        </cell>
+                    </row>
+                     
+                </rows>
+                
+            </grid>
+
+           <!--  
+	           <tabbox width="100%">
+	            	<tabs>
+	            		<tab label="Locale" />
+	            		<tab label="Module" />
+	            	</tabs>
+	            	<tabpanels>
+	            		<tabpanel>This is panel 1
+	            		    <button>Select Locale</button>
+	            		</tabpanel>
+	            		<tabpanel>This is panel 2
+	            		    <button>Select Module</button>
+	            		</tabpanel>
+	            	</tabpanels>
+	            </tabbox> 
+            -->
+            
+        </groupbox>
+        
+
+    </vbox>
+     
+    <!-- 
+	    <popup id="localePopup" width="300px">
+	    	<vlayout>
+	    		Locale format: [name] [language Code] [Country code]
+	    	</vlayout>
+	    </popup> 
+    --> 
+
+    <include src="/common/messageDialogs.zul" />
+    
+</window>
+</zk>

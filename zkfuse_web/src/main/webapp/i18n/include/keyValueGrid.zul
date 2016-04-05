@@ -1,0 +1,66 @@
+<panel style="margin-top: 5px;" title="Key Value List" hflex="1"
+	apply="org.zkoss.bind.BindComposer"
+	viewModel="@id('keyValueVM')  @init('org.zkfuse.web.vm.i18n.KeyValueInplaceEditingViewModel')">
+
+	<panelchildren>
+
+		<!--  inefficient approach, fast prototype only
+			<zscript><![CDATA[
+			    keyValueVM.loadKeyValueStatusList(vm.getSelected());
+			  ]]>
+			</zscript> 
+		-->
+
+		<grid id="keyValueGrid" mold="paging"
+			model="@load(keyValueVM.keyValueStatusList) @template((keyValueVM.displayEdit and each.editingStatus) ? 'editable' : 'noneditable')"
+                style="border-top: none; border-bottom: none">
+
+			<columns>
+				<column width="80px" sort="auto(keyValue.keyValueId)">KeyValue Id</column>
+				<column width="200px" sort="auto(keyValue.property)">Key</column>
+				<column width="300px" sort="auto(keyValue.value)">Value</column>
+				<column width="300px" sort="auto(keyValue.description)">Description</column>
+				<column width="100px" visible="@load(keyValueVM.displayEdit)">Edit</column>
+				<column />
+			</columns>
+
+			<template name="editable">
+				<row>
+					<label value="@load(each.keyValue.keyValueId) @save(each.keyValue.keyValueId, before='confirmSave')" />
+					<textbox value="@load(each.keyValue.property) @save(each.keyValue.property, before='confirmSave')"
+						mold="rounded" constraint="no empty" />
+					<textbox value="@load(each.keyValue.value) @save(each.keyValue.value, before='confirmSave')"
+						mold="rounded" constraint="no empty" />
+					<textbox value="@load(each.keyValue.description) @save(each.keyValue.description, before='confirmSave')"
+						mold="rounded"  width="200px" />
+					<div>
+						<button image="/imgs/tick-small.png" onClick="@command('confirmSave', keyValueStatus=each)" />
+						<button image="/imgs/cross-small.png" onClick="@command('confirmDelete', keyValueStatus=each)" />
+					</div>
+					<label/>
+				</row>
+			</template>
+			<template name="noneditable">
+				<row>
+					<label value="@load(each.keyValue.keyValueId)" />
+					<label value="@load(each.keyValue.property)" />
+					<label value="@load(each.keyValue.value)" />
+					<label value="@load(each.keyValue.description)" />
+					<button image="/imgs/pencil-small.png" onClick="@command('changeEditableStatus', keyValueStatus=each)" />
+					<label />
+				</row>
+			</template>
+
+		</grid>
+
+		<toolbar mold="panel">
+			<button label="New" onClick="@command('newKeyValue')" />
+		</toolbar>
+
+		<include src="/common/keyValueMessageDialogs.zul" />
+
+	</panelchildren>
+
+
+</panel>
+

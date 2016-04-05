@@ -1,0 +1,65 @@
+<?page title="Hello World!" contentType="text/html;charset=UTF-8"?>
+<?xel-method prefix="c" name="l" class="org.zkfuse.web.util.i18n.LabelsUtil" signature="java.lang.String getLabel(java.lang.String)"?>
+
+<zk xmlns:h="http://www.w3.org/1999/xhtml" xmlns:zk="http://www.zkoss.org/2005/zk">
+
+	<style>
+	    <!-- credits: http://robertnyman.com/2010/02/24/css-display-inline-block-why-it-rocks-and-why-it-sucks/ -->
+	    ul.display-inline-block, ul.display-inline-block li {
+	        vertical-align: top;
+	        display: inline-block;
+	        margin: 0 10px;
+	        padding: 0;
+	    }
+	
+	    ul .z-separator-hor, ul .z-separator-hor-bar {
+	        height: 0px;
+	    }
+
+	    .bold-font {
+            font-weight: bold;
+        }
+	</style>
+	
+	<window title="Hello World" border="normal" width="100%" apply="org.zkfuse.web.composer.BaseBindComposer" 
+	   viewModel="@id('vm') @init('org.zkfuse.web.vm.i18n.HelloWorldVM')" >
+		    
+		  <separator />
+		  <separator />
+
+		  <h:ul class="display-inline-block" >
+                <h:li>
+                    <image src="/imgs/Aqua-Ball-Green-icon.png"  height="12px" />
+                </h:li>
+                <h:li>
+                     This page is using the module <label class="bold-font">TestModule</label> created from the left 'I18N Admin' panel <separator />
+                     to display the greeting label below using the label with key 'zk' after 'Helloooo'.
+                </h:li>
+          </h:ul>
+
+          <separator />
+
+		  <h:ul class="display-inline-block" >
+              <h:li>
+                  <image src="/imgs/Aqua-Ball-Green-icon.png"  height="12px" />
+              </h:li>
+              <h:li>
+                  Please use the 'I18N Administration' panel on the left to change the label below for the current local <separator/>
+                  selected from Locale combobox above. Then come back to this page again to see the changes.
+              </h:li>
+          </h:ul>
+
+		  <separator />
+		  <separator />
+	
+		  <h:ul class="display-inline-block bold-font" >
+			  <h:li>Helloooo</h:li>
+			  <h:li>
+			      ${c:l('zk')}!
+			  </h:li>
+		  </h:ul>
+		  <separator />
+	      
+	</window>
+
+</zk>

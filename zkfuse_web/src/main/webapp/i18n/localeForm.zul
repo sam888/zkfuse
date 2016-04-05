@@ -1,0 +1,86 @@
+<zk xmlns="http://www.zkoss.org/2005/zul">
+<style>
+.z-label.red{
+    color:red;
+}
+</style>
+<window title="Locale Management" border="normal" width="100%" contentStyle="overflow:auto"
+    apply="org.zkoss.bind.BindComposer" viewModel="@id('vm') @init('org.zkfuse.web.vm.i18n.LocaleVM')" 
+        validationMessages="@id('vmsgs')">
+    
+    <vbox hflex="true">
+    
+        <listbox model="@load(vm.entityList)" selectedItem="@bind(vm.selected)" hflex="true" height="200px">
+            <listhead>
+                <listheader label="Id" width="80px" sort="auto(localeId)" />
+                <listheader label="Name" width="180px" sort="auto(name)" />
+                <listheader label="Language Code" align="center" width="120px" sort="auto(languageCode)" />
+                <listheader label="Country Code" align="center" width="120px" sort="auto(countryCode)" />                
+                <listheader label="Variant Code" align="center" width="120px" sort="auto(variantCode)" />
+                <listheader label="Description" align="center" width="200px" />
+                <listheader label="" align="center" width="100%" />
+            </listhead>
+            <template name="model" var="item">
+                <listitem >
+                    <listcell label="@load(item.localeId)"/>              
+                    <listcell label="@load(item.name)"/>              
+                    <listcell label="@load(item.languageCode)"/>
+                    <listcell label="@load(item.countryCode)"/>
+                    <listcell label="@load(item.variantCode)"/>
+                    <listcell label="@load(item.description)"/>
+                    <listcell label="" />
+                </listitem>
+            </template>
+        </listbox>
+        <toolbar>
+            <button id="newBtn" label="New" onClick="@command('newEntity')" autodisable="newBtn,saveBtn,deleteBtn" />
+            <button id="saveBtn" label="Save" onClick="@command('saveEntity')" disabled="@bind(empty vm.selected)" autodisable="newBtn,saveBtn,deleteBtn" />
+            <button id="deleteBtn" label="Delete" onClick="@command(empty vm.selected.localeId?'deleteEntity':'confirmDelete')" autodisable="newBtn,saveBtn,deleteBtn"
+                    disabled="@load(empty vm.selected)" />
+        </toolbar>
+        <groupbox form="@id('fx') @load(vm.selected) @save(vm.selected, before='saveEntity')" visible="@bind(not empty vm.selected)" hflex="true" mold="3d">
+            <grid hflex="true" >
+                <columns>
+                    <column width="120px"/>
+                    <column/>
+                </columns>
+                <rows>
+                    <row>
+                        Id
+                        <hlayout>
+                            <label value="@bind(fx.localeId)" />
+                            <image src="@load(fxStatus.dirty?'exclamation.png':'')" />
+                        </hlayout>
+                    </row> 
+                    <row>
+                        Name
+                        <hlayout>
+                            <textbox id="namebox" value="@bind(fx.name) @validator(vm.jsr303Validator)" mold="rounded"  />
+                            <label value="@load(vmsgs[namebox])" sclass="red" />
+                        </hlayout>
+                    </row> 
+                    <row>Language Code 
+                        <hlayout> 
+                            <textbox id="langbox" value="@bind(fx.languageCode) @validator(vm.jsr303Validator)"  mold="rounded" />
+                            <label value="@load(vmsgs[langbox])" sclass="red" />
+                        </hlayout>  
+                    </row>
+                    <row>Country Code 
+                        <hlayout> 
+                            <textbox id="countrybox" value="@bind(fx.countryCode) @validator(vm.jsr303Validator)" mold="rounded"/>
+                            <label value="@load(vmsgs[countrybox])" sclass="red" />
+                        </hlayout>  
+                        
+                    </row>
+                    <row>Variant Code <textbox value="@bind(fx.variantCode)" mold="rounded"/></row>
+                    <row>Description <textbox value="@bind(fx.description)" rows="4" cols="40" mold="rounded"/></row> 
+
+                </rows>
+            </grid>
+        </groupbox>
+    </vbox>
+    
+   <include src="/common/messageDialogs.zul" />
+    
+</window>
+</zk>

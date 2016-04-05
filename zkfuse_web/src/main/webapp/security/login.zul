@@ -1,0 +1,55 @@
+<?page id="testZul" title="CUSTOM ZK + Apache Shiro login"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+
+    <hbox self="@define(content)" vflex="1" hflex="1" align="center" pack="center" spacing="20px"
+          apply="org.zkfuse.web.security.controller.ShiroLoginController">
+
+        <vlayout>
+
+            <html if="${not empty requestScope.logoutSuccess}">
+                <![CDATA[
+                    Logged out successfully!!<br/><br/>
+                ]]>
+            </html>
+
+            <window id="loginwin" title="Login with your name" border="normal" width="350px" >
+                <!-- this form-login-page form is also used as the
+                     form-error-page to ask for a login again. -->
+
+                <html style="color:red" if="${not empty requestScope.loginFailure}">
+                  <![CDATA[
+                    Your login attempt was not successful, try again.<br/><br/>
+                   ]]>
+                </html>
+
+                    <vbox hflex="min" align="center" >
+                        <h:form id="f" name="loginform" action="" method="POST" xmlns:h="native">
+                            <grid hflex="max">
+                                <columns>
+                                    <column hflex="min" align="right" />
+                                    <column />
+                                </columns>
+                                <rows>
+                                    <row>User: <textbox id="u" name="user" mold="rounded" hflex="1"/></row>
+                                    <row>Password: <textbox id="p" type="password" name="pass" hflex="1" mold="rounded"/></row>
+
+                                    <!--<row><checkbox id="r" name="remember" />Remember</row>-->
+                                </rows>
+                            </grid>
+
+                            <separator height="15px" />
+                            <hbox>
+                                <h:input type="submit" value="Login"/>
+                            </hbox>
+
+                        </h:form>
+                    </vbox>
+
+            </window>
+
+        </vlayout>
+
+    </hbox>
+
+</zk>

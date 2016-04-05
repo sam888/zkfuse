@@ -1,0 +1,33 @@
+
+<zk>
+
+     <window title="Confirm" mode="modal" border="normal" width="400px" visible="@load(not empty keyValueVM.deleteMessage)">
+        <vbox hflex="true">
+    
+           <hbox height="80px">
+                <image src="~./zul/imgs/msgbox/question-btn.png"/>
+                <label multiline="true" value="@load(keyValueVM.deleteMessage)"/>
+            </hbox>
+            
+            <hbox pack="center" hflex="true">
+                <button label="Delete" onClick="@command('deleteEntity')"/>
+                <button label="Cancel" onClick="@command('cancelDelete')"/>
+            </hbox>
+        </vbox>
+    </window>
+    
+    <window title="Error" mode="modal" border="normal" width="400px" visible="@load(not empty keyValueVM.errorMessage)" >
+        <vbox hflex="true">
+
+            <hbox height="80px">
+                <image src="~./zul/imgs/msgbox/stop-btn.png"/>
+                <label multiline="true" value="@load(keyValueVM.errorMessage)" sclass="word-wrap" width="100%" />
+            </hbox>
+            
+            <hbox pack="center" hflex="true">
+                <button label="OK" onClick="@command('clearErrorMessage')"/>
+            </hbox>
+        </vbox>
+	</window>
+		
+</zk>

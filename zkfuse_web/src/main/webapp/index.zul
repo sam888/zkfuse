@@ -1,0 +1,131 @@
+<?link rel="stylesheet" type="text/css" href="/css/style.css"?>
+<?page title="Welcome to Sam's demo site" contentType="text/html;charset=UTF-8"?>
+<zk xmlns:h="http://www.w3.org/1999/xhtml" >
+
+     <style>
+
+         <!-- credits: http://robertnyman.com/2010/02/24/css-display-inline-block-why-it-rocks-and-why-it-sucks/ -->
+         ul.display-inline-block, ul.display-inline-block li {
+             vertical-align: top;
+             display: inline-block;
+             margin: 0 10px;
+             padding: 0;
+         }
+
+         ul .z-separator-hor, ul .z-separator-hor-bar {
+             height: 0px;
+         }
+
+         .bold-font {
+             font-weight: bold;
+         }
+     </style>
+
+    <vbox vflex="1" hflex="1" align="top" pack="top" spacing="20px" style="margin-left: 50px; margin-top: 50px ">
+
+        <image src="/imgs/welcome.png"  />
+
+        <div align="left">
+            <label value="Welcome to Sam's demo site. Thanks for visiting! Hope you find it interesting." sclass="head1" />
+
+            <separator style="margin-top: 20px" />
+            <h:ul class="display-inline-block" >
+                <h:li>
+                    <image src="/imgs/Aqua-Ball-Green-icon.png"  height="12px" />
+                </h:li>
+                <h:li>
+                    <a href="i18n.zul" target="_blank">
+                        Doing Internationalization(i18n) with Database </a> for every label on page without restarting server! <separator style="margin-top: 10px "/>
+                        * This is a DB driven, ajax-enabled page. <separator style="margin-top: 10px "/>
+                        * Note gibberish may appear in labels for foreign languages if DB/browser doesn't support UTF-8 encoding<separator />
+                </h:li>
+            </h:ul>
+
+            <separator style="margin-top: 20px" />
+            <h:ul class="display-inline-block" >
+                <h:li>
+                    <image src="/imgs/Aqua-Ball-Green-icon.png"  height="12px" />
+                </h:li>
+                <h:li>
+                    <a href="security/index.zul" target="_blank">Security Admin Console</a> for managing users, roles and assoicated permissions stored in DB
+                </h:li>
+            </h:ul>
+
+            <separator style="margin-top: 20px" />
+            <h:ul class="display-inline-block" >
+                <h:li>
+                    <image src="/imgs/Aqua-Ball-Green-icon.png"  height="12px" />
+                </h:li>
+                <h:li>
+                    <a href="security/shiro_login.zul" target="_blank">Shiro Authentication and Authorization Demo</a> - username and password required to login are in Security Admin Console demo above
+                </h:li>
+            </h:ul>
+
+            <separator style="margin-top: 20px" />
+            <h:ul class="display-inline-block" >
+                <h:li>
+                    <image src="/imgs/Aqua-Ball-Blue-icon.png"  height="12px" />
+                </h:li>
+                <h:li>
+                    <a href="/test/jvmInfo.zul" target="_blank">JVM Information</a> See how much memory left for the running web app. Handy to see memory settings of JVM running web app...
+                </h:li>
+            </h:ul>
+
+            <separator style="margin-top: 20px" />
+            <h:ul class="display-inline-block" >
+                <h:li>
+                    <image src="/imgs/Aqua-Ball-Blue-icon.png"  height="12px" />
+                </h:li>
+                <h:li>
+                    <a href="/webservice/webservice_demo.zul" target="_blank">Web Service Security Demo</a>
+                </h:li>
+            </h:ul>
+
+            <separator style="margin-top: 20px" />
+            <h:ul class="display-inline-block" >
+                <h:li>
+                    <image src="/imgs/Aqua-Ball-Blue-icon.png"  height="12px" />
+                </h:li>
+                <h:li>
+                    <a href="/security/encrypt/encryption_demo.zul" target="_blank">Encryption Demo</a>
+                </h:li>
+            </h:ul>
+
+            <separator style="margin-top: 20px" />
+            <h:ul class="display-inline-block" >
+                <h:li>
+                    <image src="/imgs/Aqua-Ball-Red-icon.png"  height="12px" />
+                </h:li>
+                <h:li>
+                    Source code for this demo is available for download <separator />
+                    <button label="Download zkfuse">
+                        <attribute name="onClick"><![CDATA[
+                            Filedownload.save("/download/zkfuse.rar", null);
+                        ]]></attribute>
+                    </button>
+
+                </h:li>
+            </h:ul>
+
+            <separator style="margin-top: 20px" />
+            <h:ul class="display-inline-block" >
+                <h:li>
+                    <image src="/imgs/Aqua-Ball-Red-icon.png"  height="12px" />
+                </h:li>
+                <h:li>
+                    Walkthrough for this demo is available for download<separator />
+                    <button label="Download zkfuse walkthrough">
+                        <attribute name="onClick"><![CDATA[
+                            Filedownload.save("/download/zkfuse_walkthrough.zip", null);
+                        ]]></attribute>
+                    </button>
+
+                </h:li>
+            </h:ul>
+
+            <separator style="margin-top: 20px" />
+        </div>
+
+    </vbox>
+
+</zk>
